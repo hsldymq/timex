@@ -41,7 +41,7 @@ func (tr *InclusiveTimeRange) IterTimeBy(interval time.Duration) iter.Seq[time.T
 	return func(yield func(time.Time) bool) {
 		start, end := tr.StartTime(), tr.EndTime()
 		t := start
-		for start.Before(end) || start.Equal(end) {
+		for t.Before(end) || t.Equal(end) {
 			if !yield(t) {
 				return
 			}
