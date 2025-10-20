@@ -2,6 +2,7 @@ package timex
 
 import (
 	"errors"
+	"iter"
 	"time"
 )
 
@@ -33,6 +34,20 @@ func (tr *InclusiveTimeRange) StartTime() time.Time {
 // EndTime 返回结束时间
 func (tr *InclusiveTimeRange) EndTime() time.Time {
 	return tr.end
+}
+
+// IterTimeBy 按照指定时间间隔迭代时间范围内的时间点
+func (tr *InclusiveTimeRange) IterTimeBy(interval time.Duration) iter.Seq[time.Time] {
+	return func(yield func(time.Time) bool) {
+		start, end := tr.StartTime(), tr.EndTime()
+		t := start
+		for start.Before(end) || start.Equal(end) {
+			if !yield(t) {
+				return
+			}
+			t = t.Add(interval)
+		}
+	}
 }
 
 // IsBeforeStart 这个方法判断给定时间是否在开始时间之前
