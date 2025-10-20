@@ -99,14 +99,32 @@ func (tr *TimeRange) StartTime() time.Time {
 	return tr.start
 }
 
-// IsStartTimeInclusive 返回开始时间是否包含在范围内
-func (tr *TimeRange) IsStartTimeInclusive() bool {
-	return tr.startInclusive
+// StartTimeInclusive 返回包含在范围内的开始时间
+func (tr *TimeRange) StartTimeInclusive() time.Time {
+	if tr.startInclusive {
+		return tr.start
+	}
+
+	return tr.start.Add(time.Nanosecond)
 }
 
 // EndTime 返回结束时间
 func (tr *TimeRange) EndTime() time.Time {
 	return tr.end
+}
+
+// EndTimeInclusive 返回包含在范围内的结束时间
+func (tr *TimeRange) EndTimeInclusive() time.Time {
+	if tr.startInclusive {
+		return tr.end
+	}
+
+	return tr.end.Add(-time.Nanosecond)
+}
+
+// IsStartTimeInclusive 返回开始时间是否包含在范围内
+func (tr *TimeRange) IsStartTimeInclusive() bool {
+	return tr.startInclusive
 }
 
 // IsEndTimeInclusive 返回结束时间是否包含在范围内
