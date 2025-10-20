@@ -25,6 +25,16 @@ func NewInclusiveTimeRange(startTime, endTime time.Time) (*InclusiveTimeRange, e
 	}, nil
 }
 
+// StartTime 返回开始时间
+func (tr *InclusiveTimeRange) StartTime() time.Time {
+	return tr.start
+}
+
+// EndTime 返回结束时间
+func (tr *InclusiveTimeRange) EndTime() time.Time {
+	return tr.end
+}
+
 // IsBeforeStart 这个方法判断给定时间是否在开始时间之前
 func (tr *InclusiveTimeRange) IsBeforeStart(t time.Time) bool {
 	return t.Before(tr.start)
