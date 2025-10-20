@@ -15,6 +15,15 @@ type InclusiveTimeRange struct {
 	end   time.Time
 }
 
+// MustNewInclusiveTimeRange 创建InclusiveTimeRange, 如果参数无效则 panic
+func MustNewInclusiveTimeRange(startTime, endTime time.Time, startTimeInclusive, endTimeInclusive bool) *TimeRange {
+	t, err := NewTimeRange(startTime, endTime, startTimeInclusive, endTimeInclusive)
+	if err != nil {
+		panic(err)
+	}
+	return t
+}
+
 // NewInclusiveTimeRange 创建InclusiveTimeRange
 func NewInclusiveTimeRange(startTime, endTime time.Time) (*InclusiveTimeRange, error) {
 	if startTime.After(endTime) {
@@ -71,6 +80,15 @@ type TimeRange struct {
 	end            time.Time
 	startInclusive bool // start 是否落在日期范围中, 即是否左闭区间.
 	endInclusive   bool // end 是否落在日期范围中, 即是否右闭区间.
+}
+
+// MustNewTimeRange 创建TimeRange, 如果参数无效则 panic
+func MustNewTimeRange(startTime, endTime time.Time, startTimeInclusive, endTimeInclusive bool) *TimeRange {
+	t, err := NewTimeRange(startTime, endTime, startTimeInclusive, endTimeInclusive)
+	if err != nil {
+		panic(err)
+	}
+	return t
 }
 
 // NewTimeRange 创建TimeRange
